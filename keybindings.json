@@ -2,8 +2,9 @@
 [
     {
         "key": "shift+cmd+d",
-        "command": "editor.action.duplicateSelection"
-    },
+        "command": "editor.action.duplicateSelection",
+        "when": "editorTextFocus"
+},
     {
         "key": "shift+a",
         "command": "explorer.newFolder",
@@ -23,5 +24,65 @@
         "key": "cmd+escape",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
-    }
+    },
+
+	{
+		"command": "runCommands",
+		"key": "cmd+k cmd+enter", 
+		"args": {
+		  "commands": [
+			"workbench.action.files.save",
+            "workbench.action.terminal.focus",
+            {
+                "command": "workbench.action.terminal.sendSequence",
+                "args":{
+                    "text": "meltano invoke dbt-snowflake run -s ${fileBasenameNoExtension}\n"
+                }
+            },
+		  ],
+		"description": "Run the model in the active editor.",
+        "when": "editorTextFocus"
+		}
+	  },
+
+	{
+		"command": "runCommands",
+		"key": "cmd+k cmd+shift+enter", 
+		"args": {
+		  "commands": [
+			"workbench.action.files.save",
+            "workbench.action.terminal.focus",
+            {
+                "command": "workbench.action.terminal.sendSequence",
+                "args":{
+                    "text": "meltano invoke dbt-snowflake run -s +${fileBasenameNoExtension}\n"
+                }
+            }
+		  ],
+		"description": "Run the model in the active editor and all upstream models.",
+        "when": "editorTextFocus"
+		}
+	  },
+
+	{
+		"command": "runCommands",
+		"key": "cmd+shift+t", 
+		"args": {
+		  "commands": [
+			"workbench.action.files.save",
+            "workbench.action.terminal.focus",
+            {
+                "command": "workbench.action.terminal.sendSequence",
+                "args":{
+                    "text": "meltano invoke dbt-snowflake test -s +${fileBasenameNoExtension}\n"
+                }
+            }
+		  ],
+		"description": "Run tests for the model in the active editor and all upstream models.",
+        "when": "editorTextFocus"
+		}
+	  }
 ]
+
+
+
