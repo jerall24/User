@@ -26,12 +26,17 @@
         "when": "terminalFocus"
     },
 
+    {
+        "key": "cmd+shift+backspace",
+        "command": "editor.action.deleteLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+
 	{
 		"command": "runCommands",
 		"key": "cmd+k cmd+enter", 
 		"args": {
 		  "commands": [
-			"workbench.action.focusLastEditorGroup",
             "workbench.action.files.save",
             "workbench.action.terminal.focus",
             {
@@ -51,7 +56,6 @@
 		"key": "cmd+k cmd+shift+enter", 
 		"args": {
 		  "commands": [
-			"workbench.action.focusLastEditorGroup",
             "workbench.action.files.save",
             "workbench.action.terminal.focus",
             {
@@ -71,7 +75,6 @@
 		"key": "cmd+shift+t", 
 		"args": {
 		  "commands": [
-			"workbench.action.focusLastEditorGroup",
             "workbench.action.files.save",
             "workbench.action.terminal.focus",
             {
