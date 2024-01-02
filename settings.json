@@ -3,5 +3,11 @@
     "git.confirmSync": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "editor.minimap.enabled": false
+    "workbench.startupEditor": "none",
+    "git.openRepositoryInParentFolders": "never",
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.minimap.enabled": false,
+    "editor.quickSuggestions": {
+        "strings": true
+    }
 }

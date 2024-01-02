@@ -53,7 +53,7 @@
 
 	{
 		"command": "runCommands",
-		"key": "cmd+k cmd+shift+enter", 
+		"key": "cmd+k cmd+ctrl+enter", 
 		"args": {
 		  "commands": [
             "workbench.action.files.save",
@@ -72,6 +72,25 @@
 
 	{
 		"command": "runCommands",
+		"key": "cmd+k cmd+alt+enter", 
+		"args": {
+		  "commands": [
+            "workbench.action.files.save",
+            "workbench.action.terminal.focus",
+            {
+                "command": "workbench.action.terminal.sendSequence",
+                "args":{
+                    "text": "meltano invoke dbt-snowflake run -s ${fileBasenameNoExtension}+\n"
+                }
+            }
+		  ],
+		"description": "Run the model in the active editor and all upstream models.",
+        "when": "editorTextFocus"
+		}
+	  },
+
+	{
+		"command": "runCommands",
 		"key": "cmd+shift+t", 
 		"args": {
 		  "commands": [
@@ -80,15 +99,31 @@
             {
                 "command": "workbench.action.terminal.sendSequence",
                 "args":{
-                    "text": "meltano invoke dbt-snowflake test -s +${fileBasenameNoExtension}\n"
+                    "text": "meltano invoke dbt-snowflake test -s +${fileBasenameNoExtension} --store-failures\n"
                 }
             }
 		  ],
 		"description": "Run tests for the model in the active editor and all upstream models.",
         "when": "editorTextFocus"
 		}
-	  }
+	  },
+
+      {
+        "key": "cmd+k cmd+,",
+        "command": "runCommands",
+        "when": "editorTextFocus",
+        "args": {
+            "commands": [
+                "editor.action.insertCursorAtEndOfEachLineSelected",
+                "cursorHome",
+                {
+                    "command": "editor.action.insertSnippet",
+                    "args": {
+                        "snippet": ", $TM_SELECTED_TEXT"
+                    }
+                }
+            ]
+        },
+        "description": "Add a leading comma and space to each line in the selected text"
+      }
 ]
-
-
-

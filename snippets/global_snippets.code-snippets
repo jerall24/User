@@ -1,0 +1,82 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"prod_analytics_db": {
+		"prefix": "padb",
+		"body": [
+			"prod_analytics_db"
+		],
+		"description": "Replace padb with prod_analytics_db"
+	},
+
+	"dev_analytics_db": {
+		"prefix": "dadb",
+		"body": [
+			"dev_analytics_db.dbt_jallard_"
+		],
+		"description": "Replace dadb with dev_analytics_db"
+	},
+
+	"prod_reverse_etl_db": {
+		"prefix": "predb",
+		"body": [
+			"prod_reverse_etl_db"
+		],
+		"description": "Replace prdb with prod_reverse_etl_db"
+	},
+
+	"prod_ent_transform_db": {
+		"prefix": "petdb",
+		"body": [
+			"prod_ent_transform_db"
+		],
+		"description": "Replace petdb with prod_ent_transform_db"
+	},
+
+	"prod_ent_db": {
+		"prefix": "pedb",
+		"body": [
+			"prod_ent_db"
+		],
+		"description": "Replace pedb with prod_ent_db"
+	},
+
+	"relationship test": {
+		"prefix": "reltest",
+		"body": [
+			"- relationships:","\t\tto: ref('prep_$0__${CLIPBOARD/(.*)(_id|_uuid)/$1s/}')","\t\tfield: $CLIPBOARD"
+		],
+		"description": "Creates a relationship test for the id that is currently in the clipboard"
+	},
+
+	"docmd": {
+		"prefix": "docmd",
+		"body": [
+			"{% docs $CLIPBOARD %}", "$0", "{% enddocs %}\n"
+		],
+		"description": "Formats a doc block for the respective field in the clipboard in the .md file"
+	},
+	
+	"docyml": {
+		"prefix": "docyml",
+		"body": [
+			"'{{ doc(\"$CLIPBOARD\") }}'"
+		],
+		"description": "Formats a doc block for the respective field in the clipboard in the .yml file"
+	}
+} 
