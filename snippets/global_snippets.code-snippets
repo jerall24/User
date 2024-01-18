@@ -1,21 +1,4 @@
 {
-	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
-	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
-	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
-	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
-	// Placeholders with the same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"scope": "javascript,typescript",
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-
 	"prod_analytics_db": {
 		"prefix": "padb",
 		"body": [
@@ -59,7 +42,9 @@
 	"relationship test": {
 		"prefix": "reltest",
 		"body": [
-			"- relationships:","\t\tto: ref('prep_$0__${CLIPBOARD/(.*)(_id|_uuid)/$1s/}')","\t\tfield: $CLIPBOARD"
+			"- relationships:",
+			"\t\tto: ref('prep_$0__${CLIPBOARD/(.*)(_id|_uuid)/$1s/}')",
+			"\t\tfield: $CLIPBOARD"
 		],
 		"description": "Creates a relationship test for the id that is currently in the clipboard"
 	},
@@ -67,7 +52,9 @@
 	"docmd": {
 		"prefix": "docmd",
 		"body": [
-			"{% docs $CLIPBOARD %}", "$0", "{% enddocs %}\n"
+			"{% docs $CLIPBOARD %}\n", 
+			"$0\n", 
+			"{% enddocs %}\n"
 		],
 		"description": "Formats a doc block for the respective field in the clipboard in the .md file"
 	},
@@ -78,5 +65,30 @@
 			"'{{ doc(\"$CLIPBOARD\") }}'"
 		],
 		"description": "Formats a doc block for the respective field in the clipboard in the .yml file"
+	},
+	
+	"table materialization block": {
+		"prefix": "configtable",
+		"body": [
+			"{{",
+			"	config(",
+			"		materialized='table'",
+			"	)",
+			"}}"
+		],
+		"description": "Config block to materialize a model as a table. To be added to a sql file."
+	},
+
+	"count query": {
+		"prefix": "sqlcount",
+		"body": [
+			"select $2, count(1)",
+			"from dev_analytics_db.dbt_jallard_$1",
+			"group by all",
+			"order by 2 desc",
+			";"
+		],
+		"description": "Boilerplate SQL query to get the count of values in a specific table"
 	}
-} 
+
+}

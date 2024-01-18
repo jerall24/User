@@ -9,5 +9,14 @@
     "editor.minimap.enabled": false,
     "editor.quickSuggestions": {
         "strings": true
+    },
+	"Prettier-SQL.commaPosition": "before",
+    "Prettier-SQL.keywordCase": "lower",
+    "[markdown]": {
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": false
+        }
     }
 }
