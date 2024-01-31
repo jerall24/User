@@ -89,6 +89,31 @@
 			";"
 		],
 		"description": "Boilerplate SQL query to get the count of values in a specific table"
+	},
+
+	"min max query": {
+		"prefix": "sqlminmax",
+		"body": [
+			"select $2, min($3), max($3)",
+			"from dev_analytics_db.dbt_jallard_$1",
+			"group by all",
+			"order by 2",
+			";"
+		],
+		"description": "Boilerplate SQL query to get the min and max of a field in a specific table"
+	},
+
+	"table columns": {
+		"prefix": "tablecolumns",
+		"body": [
+			"select listagg(lower(column_name), '\\n\\t, ') within group (order by ordinal_position)",
+			"from ${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$1/}.information_schema.columns",
+			"where lower(table_name) = lower('${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$3/}')",
+			"and lower(table_schema) = lower('${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$2/}')",
+			";"
+		],
+		"description": "List out in ascending order according to the ordinal position 
+		all the columns in a table based on the database.schema.table copied in the clipboard."
 	}
 
 }
