@@ -15,6 +15,14 @@
 		"description": "Replace dadb with dev_analytics_db"
 	},
 
+	"dev_analytics_db with table": {
+		"prefix": "tdadb",
+		"body": [
+			"dev_analytics_db.dbt_jallard_${CLIPBOARD/(?:[a-z]+_)([\\w_]+)(?:__\\w+)/$1/}.${CLIPBOARD}"
+		],
+		"description": "Replace dadb with dev_analytics_db with the dbt reference table in the clipboard"
+	}, 
+
 	"prod_reverse_etl_db": {
 		"prefix": "predb",
 		"body": [
@@ -31,6 +39,14 @@
 		"description": "Replace petdb with prod_ent_transform_db"
 	},
 
+	"prod_ent_transform_db with table": {
+		"prefix": "tpetdb",
+		"body": [
+			"prod_ent_transform_db.${CLIPBOARD/(?:[a-z]+_)([\\w_]+)(?:__\\w+)/$1/}.${CLIPBOARD}"
+		],
+		"description": "Replace petdb with prod_ent_transform_db with the dbt reference table in the clipboard"
+	},
+
 	"prod_ent_db": {
 		"prefix": "pedb",
 		"body": [
@@ -45,6 +61,22 @@
 			"- relationships:",
 			"\t\tto: ref('prep_$0__${CLIPBOARD/(.*)(_id|_uuid)/$1s/}')",
 			"\t\tfield: $CLIPBOARD"
+		],
+		"description": "Creates a relationship test for the id that is currently in the clipboard"
+	},
+
+	"ref function": {
+		"prefix": "ref",
+		"body": [
+			"{{ ref('${CLIPBOARD}') }}"
+		],
+		"description": "Creates a relationship test for the id that is currently in the clipboard"
+	},
+
+	"generate surrogate key": {
+		"prefix": "gensurrkey",
+		"body": [
+			"{{ dbt_utils.generate_surrogate_key('$1', '$2') }}"
 		],
 		"description": "Creates a relationship test for the id that is currently in the clipboard"
 	},
@@ -73,6 +105,7 @@
 			"{{",
 			"	config(",
 			"		materialized='table'",
+			"		alias='${TM_FILENAME_BASE}_v2'",
 			"	)",
 			"}}"
 		],
@@ -83,7 +116,7 @@
 		"prefix": "sqlcount",
 		"body": [
 			"select $2, count(1)",
-			"from dev_analytics_db.dbt_jallard_$1",
+			"from $1",
 			"group by all",
 			"order by 2 desc",
 			";"
@@ -95,12 +128,22 @@
 		"prefix": "sqlminmax",
 		"body": [
 			"select $2, min($3), max($3)",
-			"from dev_analytics_db.dbt_jallard_$1",
+			"from $1",
 			"group by all",
 			"order by 2",
 			";"
 		],
 		"description": "Boilerplate SQL query to get the min and max of a field in a specific table"
+	},,
+
+	"top 1000 query": {
+		"prefix": "top8",
+		"body": [
+			"select top 1000 *",
+			"from $1",
+			";"
+		],
+		"description": "Boilerplate SQL query to get the top 1000 rows of a specific table"
 	},
 
 	"table columns": {
@@ -114,6 +157,39 @@
 		],
 		"description": "List out in ascending order according to the ordinal position 
 		all the columns in a table based on the database.schema.table copied in the clipboard."
+	},
+
+	"unique field": {
+		"prefix": "sqldistinct",
+		"body": [
+			"with validation as (select $0 as unique_field from ${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$1/}.${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$2/}.${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$3/}),",
+			"validation_errors as (select unique_field from validation group by all having count(unique_field) > 1)",
+			"select count(1) from validation_errors",
+			";"
+		],
+		"description": "If this returns anything > 0 then there are duplicates in the respective column."
+	},
+
+	"model version": {
+		"prefix": "model version",
+		"body": [
+			"versions:",
+			"- v: 1",
+			"  defined_in: ${CLIPBOARD}",
+			"  config:\nalias: ${CLIPBOARD}",
+			"- v: 2",
+			"  defined_in: ${CLIPBOARD}_v2",
+			"  config:\nschema: peo_ops\nalias: ${CLIPBOARD}",
+		],
+		"description": "If this returns anything > 0 then there are duplicates in the respective column."
+	},
+
+	"company id regex": {
+		"prefix": "cid",
+		"body": [
+			"regexp_substr(${CLIPBOARD}, '[0-9]+')"
+		],
+		"description": "Get the company id as an integer"
 	}
 
 }

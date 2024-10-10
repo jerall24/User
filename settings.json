@@ -10,13 +10,38 @@
     "editor.quickSuggestions": {
         "strings": true
     },
-	"Prettier-SQL.commaPosition": "before",
-    "Prettier-SQL.keywordCase": "lower",
+
+    // Markdown 
     "[markdown]": {
         "editor.quickSuggestions": {
             "other": true,
             "comments": false,
             "strings": false
         }
-    }
+    },
+
+    // SQLTools
+	"sqltools.highlightQuery": false,
+	"sqltools.autoConnectTo": ["Justworks Prod"],
+	"sqltools.results.location": "end",
+	"sqltools.results.reuseTabs": "connection",
+	"sqltools.results.limit": 1000,
+
+    // SQL-Prettier
+	"Prettier-SQL.commaPosition": "before",
+    "Prettier-SQL.keywordCase": "lower",
+	"Prettier-SQL.SQLFlavourOverride": "snowflake",
+	"Prettier-SQL.newlineBeforeSemicolon": true,
+
+    // Snowflake
+    "snowflake.showExecuteAboveStatement.enabled": false,
+    "snowflake.queryHistory.itemLimit": 100,
+    "snowflake.objectExplorer.search": true,
+    "git.autofetch": true,
+    "snowflake.skipYamlSupportMessage": true,
+    "github.copilot.editor.enableAutoCompletions": true,
+    "git.ignoreRebaseWarning": true,
+    "snowflake.connectionsConfigFile": "/Users/jeremieallard/.snowflake/connections.toml",
+    "snowflake.enableNativeAppPanel": true
+    
 }

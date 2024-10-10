@@ -30,7 +30,7 @@
         "key": "cmd+shift+backspace",
         "command": "editor.action.deleteLines",
         "when": "editorTextFocus && !editorReadonly"
-    },
+    },  
 
 	{
 		"command": "runCommands",
@@ -42,7 +42,7 @@
             {
                 "command": "workbench.action.terminal.sendSequence",
                 "args":{
-                    "text": "meltano invoke dbt-snowflake run -s ${fileBasenameNoExtension}\n"
+                    "text": "dbt run -s ${fileBasenameNoExtension}\n"
                 }
             },
 		  ],
@@ -61,7 +61,7 @@
             {
                 "command": "workbench.action.terminal.sendSequence",
                 "args":{
-                    "text": "meltano invoke dbt-snowflake run -s +${fileBasenameNoExtension}\n"
+                    "text": "dbt run -s +${fileBasenameNoExtension}\n"
                 }
             }
 		  ],
@@ -80,7 +80,7 @@
             {
                 "command": "workbench.action.terminal.sendSequence",
                 "args":{
-                    "text": "meltano invoke dbt-snowflake run -s ${fileBasenameNoExtension}+\n"
+                    "text": "dbt run -s ${fileBasenameNoExtension}+\n"
                 }
             }
 		  ],
@@ -90,25 +90,25 @@
 	  },
 
 	{
-		"command": "runCommands",
-		"key": "cmd+shift+t", 
-		"args": {
-		  "commands": [
+        "command": "runCommands",
+        "key": "cmd+shift+t", 
+        "args": {
+            "commands": [
             "workbench.action.files.save",
             "workbench.action.terminal.focus",
             {
                 "command": "workbench.action.terminal.sendSequence",
                 "args":{
-                    "text": "meltano invoke dbt-snowflake test -s +${fileBasenameNoExtension} --store-failures\n"
+                    "text": "dbt test -s +${fileBasenameNoExtension} --store-failures\n"
                 }
             }
-		  ],
-		"description": "Run tests for the model in the active editor and all upstream models.",
+            ],
+        "description": "Run tests for the model in the active editor and all upstream models.",
         "when": "editorTextFocus"
-		}
-	  },
+        }
+    },
 
-      {
+    {
         "key": "cmd+k cmd+,",
         "command": "runCommands",
         "when": "editorTextFocus",
@@ -125,5 +125,113 @@
             ]
         },
         "description": "Add a leading comma and space to each line in the selected text"
-      }
+    },
+
+    {
+        "key": "cmd+k cmd+shift+l",
+        "command": "runCommands",
+        "when": "editorTextFocus && resourceExtname == .md",
+        "args": {
+            "commands": [
+                {
+                    "command": "editor.action.insertSnippet",
+                    "args": {
+                        "snippet": "[${TM_SELECTED_TEXT}]($CLIPBOARD)"
+                    }
+                }
+            ]
+        },
+        "description": "Format highlighted text as hyperlink using copied URL"
+    },
+
+    {
+        "key": "cmd+k cmd+shift+b",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.files.save",
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git checkout main\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git pull\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git checkout -b jallard.hotfix.test_fixes_$(date -u -v-4H \"+%m%d%Y\")\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "sql hotfix\n"
+                    }
+                },
+                "workbench.action.files.save"
+            ]
+        },
+        "description": "Create and switch to a new branch"
+    },
+    {
+        "key": "cmd+k cmd+m",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.files.save",
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git checkout main\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git pull\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git checkout -\n"
+                    }
+                },
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git merge main\n"
+                    }
+                },
+                "workbench.action.files.save"
+            ]
+        },
+        "description": "Switch branch to main, pull, switch back, and merge main"
+    },
+
+    {
+        "key": "cmd+k cmd+shift+o", 
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "open https://justworks.lightning.force.com/lightning/r/Account/$(pbpaste)/view\n" 
+        },
+        "description": "Open the Salesforce page for the copied object ID"
+    },
+
+    {
+        "key": "cmd+k cmd+shift+i",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "python3 scripts/get_current_information_schema.py &\n"
+        },
+        "description": "Fetch and save Snowflake information schema to CSV for prod_ent_db and prod_ent_transform_db"       
+    }
 ]
