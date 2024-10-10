@@ -155,14 +155,13 @@
 			"and lower(table_schema) = lower('${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$2/}')",
 			";"
 		],
-		"description": "List out in ascending order according to the ordinal position 
-		all the columns in a table based on the database.schema.table copied in the clipboard."
+		"description": "List out in ascending order according to the ordinal position all the columns in a table based on the database.schema.table copied in the clipboard."
 	},
 
 	"unique field": {
 		"prefix": "sqldistinct",
 		"body": [
-			"with validation as (select $0 as unique_field from ${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$1/}.${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$2/}.${CLIPBOARD/(.+)\\.(.+)\\.(.+)/$3/}),",
+			"with validation as (select $0 as unique_field from ${CLIPBOARD}),",
 			"validation_errors as (select unique_field from validation group by all having count(unique_field) > 1)",
 			"select count(1) from validation_errors",
 			";"
