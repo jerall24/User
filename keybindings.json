@@ -91,7 +91,7 @@
 
 	{
         "command": "runCommands",
-        "key": "cmd+shift+t", 
+        "key": "cmd+k cmd+t", 
         "args": {
             "commands": [
             "workbench.action.files.save",
@@ -99,7 +99,7 @@
             {
                 "command": "workbench.action.terminal.sendSequence",
                 "args":{
-                    "text": "dbt test -s +${fileBasenameNoExtension} --store-failures\n"
+                    "text": "dbt test -s ${fileBasenameNoExtension} --store-failures\n"
                 }
             }
             ],
@@ -233,5 +233,44 @@
             "text": "python3 scripts/get_current_information_schema.py &\n"
         },
         "description": "Fetch and save Snowflake information schema to CSV for prod_ent_db and prod_ent_transform_db"       
+    },
+
+    {
+        "key": "cmd+k cmd+v",
+        "command": "runCommands",
+        "when": "editorTextFocus",
+        "args": {
+            "commands": [
+                "editor.action.addSelectionToNextFindMatch",
+                {
+                    "command": "editor.action.insertSnippet",
+                    "args": {
+                        "snippet": "${TM_CURRENT_WORD}::varchar as $TM_CURRENT_WORD"
+                    }
+                }
+            ]
+        },
+        "description": "Add a ::varchar cast with an alias to the current word"
+    },  
+
+	{
+		"command": "runCommands",
+		"key": "cmd+k cmd+f", 
+		"args": {
+		  "commands": [
+            "workbench.action.files.save",
+            "workbench.action.terminal.focus",
+            {
+                "command": "workbench.action.terminal.sendSequence",
+                "args":{
+                    "text": "sqlfluff fix --templater jinja --dialect snowflake ${file}\n"
+                }
+            },
+		  ],
+		"description": "Run SQLfluff fix for the current file",
+        "when": "editorTextFocus"
+		}
     }
+
+
 ]

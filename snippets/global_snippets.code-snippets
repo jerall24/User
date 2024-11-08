@@ -21,6 +21,14 @@
 			"dev_analytics_db.dbt_jallard_${CLIPBOARD/(?:[a-z]+_)([\\w_]+)(?:__\\w+)/$1/}.${CLIPBOARD}"
 		],
 		"description": "Replace dadb with dev_analytics_db with the dbt reference table in the clipboard"
+	},
+	
+	"dev_analytics_db with marketing table": {
+		"prefix": "mdadb",
+		"body": [
+			"dev_analytics_db.dbt_jallard_${CLIPBOARD/(?:int_)?(?:marketing_)([a-z]+)(?:_[a-z]+__\\w+)/marketing/}.${CLIPBOARD}"
+		],
+		"description": "Replace dadb with dev_analytics_db with the dbt reference table in the clipboard for marketing int tables"
 	}, 
 
 	"prod_reverse_etl_db": {
@@ -105,7 +113,7 @@
 			"{{",
 			"	config(",
 			"		materialized='table'",
-			"		alias='${TM_FILENAME_BASE}_v2'",
+			"		, alias='${TM_FILENAME_BASE}_v2'",
 			"	)",
 			"}}"
 		],
@@ -134,7 +142,7 @@
 			";"
 		],
 		"description": "Boilerplate SQL query to get the min and max of a field in a specific table"
-	},,
+	},
 
 	"top 1000 query": {
 		"prefix": "top8",
@@ -189,6 +197,15 @@
 			"regexp_substr(${CLIPBOARD}, '[0-9]+')"
 		],
 		"description": "Get the company id as an integer"
-	}
+	},
 
+	"lazy query": {
+		"prefix": "qsql",
+		"body": [
+			"select top 1000 *$0",
+			"from dev_analytics_db.dbt_jallard_${CLIPBOARD/(?:[a-z]+_)([\\w_]+)(?:__\\w+)/$1/}.${CLIPBOARD}",
+			";"
+		],
+		"description": "Get the company id as an integer"
+	}
 }

@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "echo",
+            "type": "shell",
+            "command": "echo Hello"
+        },
+
+        {
+            "label": "Get current information schema",   // Task label (name of task)
+            "type": "shell",                                   // This runs in the shell
+            "command": "direnv",                                // Command to invoke direnv
+            "args": ["exec", ".", "poetry", "run", "python", "./scripts/get_current_information_schema.py"],
+            "group": {
+                "kind": "build",                                 // Group under 'build' tasks
+                "isDefault": true                                // Set as the default build task
+            },
+            "problemMatcher": [],                              // No specific error matchers
+            "detail": "Runs the script to fetch the current information schema.", // Description of the task
+            "presentation": {
+                "echo": true,                                                          // Echo the command in the terminal
+                "reveal": "never",                                                    // Reveal the terminal when running the task
+                "focus": false,                                                        // Do not focus the terminal when the task runs
+                "panel": "shared",                                                     // Use a shared terminal for the task
+                "showReuseMessage": true,                                              // Show reuse message if terminal is reused
+                "clear": false,                                                         // Clear the terminal before running the task
+                "close": true                                                          // Automatically close the terminal after task completion
+            }
+        }, 
+
+
+        {
+            "label": "Print current file info",
+            "type": "shell",
+            "command": "echo File: ${file} Dir: ${fileDirname}",
+            "problemMatcher": [],
+            "detail": "I'm considering "
+        }
+          
+    ]
+}
